@@ -17,7 +17,7 @@
 
 | 文件 | 大小 (B) | SHA256 |
 |---|---|---|
-| `th155b.pak` | 96291705 | `sha256:d85dc5571edd9783fee168bf3e34e58873ee2ca4a867b1f3c55d52f2aad2017d` |
+| `th155b.pak` | 96291705 | `d85dc5571edd9783fee168bf3e34e58873ee2ca4a867b1f3c55d52f2aad2017d` |
 | `th155.pak` | 1049739926 | `22e3ddb945c441606f189b27e817ca9cf258b9579abb220f5fd18bb8bd8a9ce5` |
 
 > 校验值对应**本次发布**的这一版 pak；pak 一旦更新，本页与 Release 附件会同步刷新。
