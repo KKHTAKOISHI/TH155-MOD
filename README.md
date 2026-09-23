@@ -1,6 +1,6 @@
 # TH155-MOD
 
-东方凭依华（Touhou 15.5 / AoCF）改版 pak —— **仅存放联机用的 pak 文件**，不含源码与改动记录。
+东方凭依华（Touhou 15.5 / AoCF）改版 pak —— **仅存放联机用的 pak 文件与改动清单**，不含源码与实验记录。
 
 当前生效的全部改动见 **[CHANGES.md](CHANGES.md)**。
 
