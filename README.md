@@ -11,7 +11,7 @@
 | `th155b.pak` | 91.8 MB | [Releases → th155b.pak](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155b.pak) |
 | `th155.pak` | 1001.1 MB | [Releases → th155.pak](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155.pak) |
 
-**联机时双方必须使用同一份 pak，实际只需交换 `th155b.pak`**（`th155.pak` 也已同步修改，但游戏读取同名条目时以 `th155b.pak` 为准）。
+**联机时双方必须使用同一份 pak，只需要将原本的 `th155.pak` 和 `th155b.pak` 替换就可以。**
 
 ## 校验
 
