@@ -29,10 +29,10 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;overflow-x:hidden}
+html{scroll-behavior:smooth;overflow-x:clip;scroll-padding-top:calc(var(--navh) + 14px);-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{
   margin:0;
-  overflow-x:hidden;
+  overflow-x:clip;
   color:var(--fg);
   background:var(--bg);
   font:15px/1.8 "Segoe UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
@@ -62,7 +62,7 @@ kbd{background:rgba(255,255,255,.09);border:1px solid var(--line2);border-bottom
 
 /* ---------------- nav ---------------- */
 nav{
-  position:sticky;top:0;z-index:60;
+  position:sticky;top:0;z-index:60;backface-visibility:hidden;
   background:rgba(7,7,43,.86);
   backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line);
@@ -83,7 +83,9 @@ nav .menu a.ext:hover{background:rgba(77,141,255,.2);}
 
 /* ---------------- hero ---------------- */
 header{
-  position:relative;min-height:calc(100vh - var(--navh));max-width:1440px;margin:0 auto;
+  position:relative;
+  min-height:calc(100vh - var(--navh));
+  min-height:calc(100svh - var(--navh));max-width:1440px;margin:0 auto;
   padding:86px 64px 96px;display:grid;
   grid-template-columns: 1fr 1.1fr; 
   align-items: center; 
@@ -363,6 +365,97 @@ footer .fine b{color:#aab3d7}
   .safe .big{margin-bottom:7px;white-space:normal}
   .deco-r,.deco-l{display:none}
 }
+
+  /* ================= 移动端加固(新增) ================= */
+  img{max-width:100%}
+  /* 触控目标: 顶栏链接足够大 */
+  nav .menu a{min-height:34px;display:inline-flex;align-items:center}
+  .ch summary{min-height:46px}
+  .ch .row .cv b{white-space:nowrap}
+  /* 长串(哈希)在窄屏可换行 */
+  .hash .v{overflow-wrap:anywhere}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere}
+
+  /* 平板/小笔记本 */
+  @media(max-width:1080px){
+    header{padding:64px 36px 76px}
+    section{padding:88px 0}
+  }
+
+  /* 大屏手机横屏 / 小平板 */
+  @media(max-width:860px){
+    .hero-panel{padding:24px 22px}
+    .clip .label{font-size:12.5px}
+    .feature-note{font-size:12.5px}
+  }
+
+  /* 手机竖屏 */
+  @media(max-width:680px){
+    nav .menu a{min-height:32px;font-size:11px;padding:6px 8px}
+    section{padding:64px 0}
+    .col-head{margin-bottom:24px}
+    h2{font-size:clamp(21px,5.6vw,26px)}
+    .lead{font-size:13.5px}
+    .clip .label{padding:10px 12px}
+    .feature-card{padding:20px 18px}
+    .step{padding:20px 18px}
+    .hash .h{padding:10px 13px;font-size:9.5px}
+    .hash .v{padding:11px 13px;font-size:11.5px}
+    .safe{padding:15px 16px}
+    pre{font-size:11.5px;padding:10px 11px}
+  }
+
+  /* 小屏手机 */
+  @media(max-width:480px){
+    :root{--navh:56px}
+    nav .inner{padding-left:12px;padding-right:12px;gap:8px}
+    nav .brand img{height:21px}
+    nav .menu{gap:0}
+    nav .menu a{padding:5px 6px;font-size:10.5px;min-height:30px;letter-spacing:0}
+    nav .menu a.ext{padding:5px 8px}
+    .shell{padding-left:14px;padding-right:14px}
+    header{padding:40px 14px 52px;gap:26px}
+    header::before{left:14px;right:14px}
+    .logo-hero{width:min(300px,78vw)}
+    .hero-lines{gap:6px}
+    .hero-lines .line-item{padding:9px 10px}
+    .hero-lines div{font-size:12.5px}
+    .btn{padding:14px 18px;font-size:13px;width:100%;justify-content:center}
+    .cta{gap:10px}
+    section{padding:52px 0}
+    .feature-card{padding:18px 16px}
+    .clip .label{font-size:12px;padding:9px 11px}
+    .ch summary{padding:12px 13px;font-size:14px}
+    .ch .cbd{padding:10px 13px 12px}
+    .ch .row{font-size:13px}
+    .step{padding:18px 16px}
+    .hash .v{font-size:10.5px}
+  }
+
+  /* 超窄屏(320px 级) */
+  @media(max-width:380px){
+    nav .menu a{font-size:10px;padding:5px 5px}
+    nav .brand span{display:none}
+    .hero-lines div{font-size:12px}
+    h2{font-size:20px}
+  }
+
+  /* 横屏矮屏: 减少 Hero 高度占用 */
+  @media(max-height:520px) and (orientation:landscape){
+    header{min-height:auto;padding-top:36px;padding-bottom:44px}
+  }
+
+  /* 触控设备: 悬停位移动画改为按下反馈, 避免误触发 */
+  @media(hover:none){
+    .btn.primary:hover{transform:none}
+    .clip:hover{box-shadow:0 14px 34px rgba(0,0,0,.33)}
+  }
+
+  /* 尊重"减少动态效果"设置 */
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition-duration:.01ms !important;animation-duration:.01ms !important}
+  }
 </style>
 </head>
 <body>
