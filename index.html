@@ -43,10 +43,10 @@
   nav .links a{color:var(--dim);font-size:14px;font-weight:500}
   nav .links a:hover{color:var(--fg);text-decoration:none}
 
-  header{padding:78px 0 46px;text-align:center}
+  header{padding:68px 0 44px;text-align:center}
   .eyebrow{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
     color:var(--acc);border:1px solid #e0d5fb;border-radius:999px;padding:5px 14px;margin-bottom:20px;background:#f8f5ff}
-  h1{margin:0 0 14px;font-size:clamp(30px,5.2vw,50px);line-height:1.16;letter-spacing:.01em}
+  h1{margin:0 0 16px;font-size:clamp(26px,4.2vw,38px);line-height:1.2;letter-spacing:.01em;font-weight:800}
   h1 .g{background:linear-gradient(100deg,#2b2350 6%,var(--acc) 52%,var(--acc2) 96%);
     -webkit-background-clip:text;background-clip:text;color:transparent}
   header p.lead{max-width:660px;margin:0 auto 30px;color:var(--dim);font-size:17px}
@@ -72,13 +72,31 @@
   h2::after{content:"";display:block;width:52px;height:3px;border-radius:3px;margin-top:12px;
     background:linear-gradient(90deg,var(--acc),transparent)}
   .sub{color:var(--dim);margin:14px 0 28px;max-width:720px}
-  .demos{display:grid;grid-template-columns:1fr;gap:44px;justify-items:center;margin-top:8px}
-  @media(min-width:840px){.demos{grid-template-columns:repeat(2,minmax(0,400px));gap:56px;justify-content:center}}
+  .demos{display:grid;grid-template-columns:1fr;gap:72px;justify-items:center;margin-top:8px}
+  @media(min-width:840px){.demos{grid-template-columns:repeat(2,minmax(0,400px));gap:90px;justify-content:center}}
   .demo{width:100%;max-width:400px;background:#fff;border:1px solid var(--line);border-radius:18px;
     overflow:hidden;box-shadow:var(--shadow)}
   .demo .shot{position:relative;background:#0c0a16;line-height:0}
   .demo img{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
 
+  .chgrid{display:grid;grid-template-columns:1fr;gap:10px}
+  @media(min-width:680px){.chgrid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1000px){.chgrid{grid-template-columns:repeat(3,1fr)}}
+  .ch{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+  .ch[open]{border-color:#c9bdee;box-shadow:0 10px 26px rgba(123,77,219,.12)}
+  .ch summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;align-items:center;gap:10px;
+    font-weight:700;font-size:15px;color:#2b2350}
+  .ch summary::-webkit-details-marker{display:none}
+  .ch summary .pm{width:16px;flex:none;color:var(--acc);font-weight:800}
+  .ch summary .pm::before{content:"+"}
+  .ch[open] summary .pm::before{content:"\2013"}
+  .ch summary .nm{flex:1}
+  .ch summary .tag{font-size:11px;font-weight:700;color:var(--acc);background:#f5f1ff;
+    border:1px solid #e2d8fb;border-radius:999px;padding:2px 9px;flex:none}
+  .ch .cbd{border-top:1px solid var(--line);padding:12px 16px 14px;background:var(--panel)}
+  .ch .crow{display:flex;gap:12px;font-size:14px;color:var(--dim);padding:5px 0;line-height:1.65}
+  .ch .crow .ck{flex:none;min-width:88px;font-weight:700;color:#3b3358}
+  .ch .crow .cv b{color:var(--fg)}
   .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
   table{border-collapse:collapse;width:100%;min-width:640px;font-size:14.5px}
   th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -121,7 +139,7 @@
 
 <header class="wrap">
   <div class="eyebrow">东方凭依华 · Touhou 15.5 / AoCF</div>
-  <h1><span class="g">平衡改造版</span><br>只换一个文件就能玩</h1>
+  <h1><span class="g">TH155-MOD</span></h1>
   <p class="lead">
     伤害修正重做、投技强化并新增独立按键、<b>LW 可以接 A / B / C 系后摇</b>、
     12 名角色手感逐个重调 —— 全部改动都封装在一个 <code>th155b.pak</code> 里。
@@ -130,7 +148,7 @@
     <a class="btn primary" href="https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155b.pak">
       ↓ 下载 th155b.pak <span style="opacity:.8;font-weight:400">91.8 MB</span>
     </a>
-    <a class="btn ghost" href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">查看全部改动</a>
+    <a class="btn ghost" href="#changes">查看全部改动 ↓</a>
   </div>
   <div class="metaline">需要正版游戏 · <b>th155.pak 保持原版不动</b> · 可完整还原</div>
 
@@ -167,31 +185,102 @@
     <table>
       <tr><th style="width:190px">项</th><th>内容</th></tr>
       <tr><td class="k">伤害修正</td><td>满血 ×1.25 / 残血 ×0.75 的递减改为 <b>恒定 ×1.0</b>；打康伤害固定 <b>×1.2</b></td></tr>
-      <tr><td class="k">投技 · 伤害</td><td>全角色统一 <b>1100</b>（例：小碗 800 → 1100）</td></tr>
+      <tr><td class="k">投技 · 伤害</td><td>全角色统一 <b>1100</b></td></tr>
       <tr><td class="k">投技 · 拆投</td><td>窗口 <b>15 → 9 帧</b></td></tr>
       <tr><td class="k">投技 · 独立按键</td><td>键盘默认 <kbd>E</kbd>，可在「按键设置」改绑；<b>该键也能拆投</b></td></tr>
-      <tr><td class="k">LW · 倍率</td><td>维持原版规则：随发动时灵力 / 符卡 cost 缩放 <b>×0.6 ～ ×1.0</b></td></tr>
       <tr><td class="k">LW · 取消后摇</td><td>可取消 <b>A / B / C 系</b>招数后摇，<b>仅限中轴</b>，起手帧不可取消；<b>圣白莲 4C 例外（不能取消）</b></td></tr>
     </table>
   </div>
 
-  <h3 style="margin:30px 0 12px;font-size:17px">角色</h3>
-  <div class="tablewrap">
-    <table>
-      <tr><th style="width:130px">角色</th><th>改动</th></tr>
-      <tr><td class="k">神子</td><td>符卡「日出」伤害 <b>−500</b>；符卡「人符」伤害 <b>+500</b>（有袍 / 无袍各 +500）；太阳拳（j5C）判定框缩小一半；红袍 DA 9 帧</td></tr>
-      <tr><td class="k">狸子（猯藏）</td><td>6B 弹丸最长持续 <b>40 → 35 帧</b>；变形符卡 cost <b>800 → 1000</b>；8A 攻击框处新增受击框（攻击区域也能被打到），且被打掉一枚叶子（叶子 −1）</td></tr>
-      <tr><td class="k">哆来咪</td><td>4C（后+C）、6B（前+B）<b>回调到 1.10 版本</b></td></tr>
-      <tr><td class="k">华扇</td><td>彩虹球伤害削弱 <b>400</b>（球自身承担，老鹰伤害不变）；老鹰只在球<b>真正命中</b>时追击（打空 / 被冲刺擦弹时不追击）</td></tr>
-      <tr><td class="k">堇子</td><td>hb 现在<b>可以弹墙</b>；瞬移后摇减少；<b>LW 伤害削弱</b>（每 hit 450 → 410）</td></tr>
-      <tr><td class="k">恋恋</td><td>瞬移<b>无后摇</b>；超反应规则：<b>A 系</b>＝打空 / 打防 / 擦弹触发，干净命中不触发；<b>B 系</b>＝打中不触发，打空 / 打防触发；<b>8C 升龙</b> 打中不触发；<b>8A 攻击范围增加</b>；LW 伤害 −500</td></tr>
-      <tr><td class="k">女苑</td><td>LW 抓取判定框增大</td></tr>
-      <tr><td class="k">魔理沙</td><td>冲刺（6D）前摇减少</td></tr>
-      <tr><td class="k">小碗（针妙丸）</td><td>空中冲刺前摇减少；符卡「小槌」范围增加、击退效果增强</td></tr>
-      <tr><td class="k">白莲</td><td>符卡「大日如来の輝き」伤害减少（每次命中 −50）</td></tr>
-      <tr><td class="k">妹紅</td><td><b>LW 伤害削弱 600</b>（每击 600 → 539）</td></tr>
-      <tr><td class="k">秦心（こころ）</td><td>6A 打中的连段补正加强：每次命中把对方后续伤害补正多压 <b>5%</b>（10% → <b>15%</b>）</td></tr>
-    </table>
+  <h3 style="margin:30px 0 12px;font-size:17px">角色 — 点击角色名展开</h3>
+  <div class="chgrid">
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">神子</span><span class="tag">4 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">符卡「日出」</span><span class="cv">伤害 <b>−500</b></span></div>
+        <div class="crow"><span class="ck">符卡「人符」</span><span class="cv">伤害 <b>+500</b>（有袍 / 无袍各 +500）</span></div>
+        <div class="crow"><span class="ck">太阳拳 j5C</span><span class="cv">判定框缩小一半</span></div>
+        <div class="crow"><span class="ck">红袍 DA</span><span class="cv">9 帧</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">狸子（猯藏）</span><span class="tag">3 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">6B 弹丸</span><span class="cv">最长持续 <b>40 → 35 帧</b></span></div>
+        <div class="crow"><span class="ck">变形符卡</span><span class="cv">cost <b>800 → 1000</b></span></div>
+        <div class="crow"><span class="ck">8A</span><span class="cv">攻击框处新增受击框（攻击区域也能被打到），且被打掉一枚叶子（叶子 −1）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">哆来咪</span><span class="tag">2 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">4C（后+C）</span><span class="cv"><b>回调到 1.10 版本</b></span></div>
+        <div class="crow"><span class="ck">6B（前+B）</span><span class="cv"><b>回调到 1.10 版本</b></span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">华扇</span><span class="tag">2 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">彩虹球</span><span class="cv">伤害削弱 <b>400</b></span></div>
+        <div class="crow"><span class="ck">老鹰</span><span class="cv">只在球<b>真正命中</b>时追击（打空 / 被冲刺擦弹时不追击）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">堇子</span><span class="tag">3 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">hb</span><span class="cv">现在<b>可以弹墙</b></span></div>
+        <div class="crow"><span class="ck">瞬移</span><span class="cv">后摇减少</span></div>
+        <div class="crow"><span class="ck">LW</span><span class="cv">伤害削弱（每 hit <b>450 → 410</b>）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">恋恋</span><span class="tag">5 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">瞬移</span><span class="cv"><b>无后摇</b></span></div>
+        <div class="crow"><span class="ck">A 系超反应</span><span class="cv">打空 / 打防 / 擦弹触发，<b>干净命中不触发</b></span></div>
+        <div class="crow"><span class="ck">B 系超反应</span><span class="cv">打中不触发，打空 / 打防触发</span></div>
+        <div class="crow"><span class="ck">8C 升龙</span><span class="cv">打中不触发</span></div>
+        <div class="crow"><span class="ck">8A / LW</span><span class="cv"><b>8A 攻击范围增加</b>；LW 伤害 <b>−500</b></span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">女苑</span><span class="tag">1 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">LW</span><span class="cv">抓取判定框增大</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">魔理沙</span><span class="tag">1 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">冲刺 6D</span><span class="cv">前摇减少</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">小碗（针妙丸）</span><span class="tag">3 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">空中冲刺</span><span class="cv">前摇减少</span></div>
+        <div class="crow"><span class="ck">符卡「小槌」</span><span class="cv">范围增加、击退效果增强</span></div>
+        <div class="crow"><span class="ck">符卡「小槌」</span><span class="cv">（伤害保持原版）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">白莲</span><span class="tag">1 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">大日如来</span><span class="cv">符卡伤害减少（每次命中 <b>−50</b>）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">妹紅</span><span class="tag">1 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">LW</span><span class="cv">伤害削弱 <b>600</b>（每击 600 → 539）</span></div>
+        </div>
+      </details>
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">秦心（こころ）</span><span class="tag">1 项</span></summary>
+        <div class="cbd">
+        <div class="crow"><span class="ck">6A</span><span class="cv">打中的连段补正加强：每次命中把对方后续伤害补正多压 <b>5%</b>（10% → <b>15%</b>）</span></div>
+        </div>
+      </details>
   </div>
 </section>
 
