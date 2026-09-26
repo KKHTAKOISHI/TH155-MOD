@@ -3,321 +3,746 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>东方凭依华 · 改造版 pak — TH155-MOD</title>
-<meta name="description" content="东方凭依华（AoCF）平衡改造版 pak：伤害修正重做、投技强化与独立按键、LW 可接 A/B/C 后摇、12 名角色手感重调。只需替换一个文件，可完整还原。">
+<title>TH155-MOD</title>
+<meta name="description" content="东方凭依华（AoCF）平衡改造版 pak。只替换一个 th155b.pak，不改 EXE、不动原版资源。">
+<link rel="icon" href="assets/game-ui/logo.png">
 <style>
-  :root{
-    --bg:#ffffff;
-    --panel:#fafafe;
-    --panel2:#f3f2fb;
-    --line:#e6e3f2;
-    --line2:#d8d4ea;
-    --fg:#1b1730;
-    --dim:#6b6684;
-    --acc:#7b4ddb;
-    --acc2:#2f6bff;
-    --hot:#d6407a;
-    --ok:#0f9d58;
-    --maxw:1060px;
-    --shadow:0 1px 2px rgba(27,23,48,.05), 0 8px 24px rgba(27,23,48,.06);
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;background:var(--bg);color:var(--fg);
-    font:16px/1.75 system-ui,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:var(--acc);text-decoration:none}
-  a:hover{text-decoration:underline}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
-  code,kbd{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.9em}
-  code{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:.12em .42em}
-  kbd{background:#fff;border:1px solid var(--line2);border-bottom-width:2px;border-radius:6px;padding:.1em .45em}
+:root{
+  --bg:#090936;
+  --bg2:#07072b;
+  --panel:rgba(16,15,58,.74);
+  --panel2:rgba(24,23,77,.88);
+  --line:rgba(108,180,252,.18);
+  --line2:rgba(108,180,252,.34);
+  --blue:#4d8dff;
+  --blue-lt:#8dbbff;
+  --cyan:#43eeee;
+  --orange:#f4a23c;
+  --red:#ff6868;
+  --gold:#f0df63;
+  --green:#4ade80;
+  --fg:#e8ebf7;
+  --dim:#a8b0d3;
+  --muted:#7f89b8;
+  --maxw:1320px;
+  --navh:64px;
+}
 
-  nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  nav .wrap{display:flex;align-items:center;gap:18px;height:58px}
-  nav .brand{font-weight:800;letter-spacing:.01em}
-  nav .brand span{color:var(--acc)}
-  nav .links{margin-left:auto;display:flex;gap:16px;flex-wrap:wrap}
-  nav .links a{color:var(--dim);font-size:14px;font-weight:500}
-  nav .links a:hover{color:var(--fg);text-decoration:none}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{
+  margin:0;
+  overflow-x:hidden;
+  color:var(--fg);
+  background:var(--bg);
+  font:15px/1.8 "Segoe UI","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+  background-image:url('assets/game-ui/title-bg.jpg');
+  background-size:cover;
+  background-position:center top;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(77,141,255,.12) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(67,238,238,.08) 0%, transparent 50%),
+    linear-gradient(180deg, rgba(9,9,54,.60) 0%, rgba(7,7,43,.85) 35%, rgba(7,7,43,.96) 100%);
+}
 
-  header{padding:68px 0 44px;text-align:center}
-  .eyebrow{display:inline-block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--acc);border:1px solid #e0d5fb;border-radius:999px;padding:5px 14px;margin-bottom:20px;background:#f8f5ff}
-  h1{margin:0 0 16px;font-size:clamp(26px,4.2vw,38px);line-height:1.2;letter-spacing:.01em;font-weight:800}
-  h1 .g{background:linear-gradient(100deg,#2b2350 6%,var(--acc) 52%,var(--acc2) 96%);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
-  header p.lead{max-width:660px;margin:0 auto 30px;color:var(--dim);font-size:17px}
-  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
-  .btn{display:inline-flex;align-items:center;gap:9px;padding:14px 26px;border-radius:12px;font-weight:600;
-    border:1px solid transparent;transition:.18s transform,.18s box-shadow,.18s background}
-  .btn.primary{background:linear-gradient(100deg,var(--acc),var(--acc2));color:#fff;
-    box-shadow:0 8px 24px rgba(123,77,219,.28)}
-  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(123,77,219,.38);text-decoration:none}
-  .btn.ghost{border-color:var(--line2);color:var(--fg);background:#fff}
-  .btn.ghost:hover{background:var(--panel2);text-decoration:none}
-  .metaline{color:var(--dim);font-size:13px}
-  .metaline b{color:var(--fg)}
+a{color:var(--blue-lt);text-decoration:none}
+a:hover{text-decoration:underline}
+code,kbd,pre{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace}
+code{background:rgba(77,141,255,.12);border:1px solid var(--line);border-radius:4px;padding:.1em .4em;color:#d7e6ff;}
+kbd{background:rgba(255,255,255,.09);border:1px solid var(--line2);border-bottom-width:2px;border-radius:4px;padding:.08em .42em;}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:14px;margin:42px 0 6px}
-  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 16px;text-align:center;box-shadow:var(--shadow)}
-  .stat .n{font-size:29px;font-weight:800;line-height:1.2;
-    background:linear-gradient(100deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat .t{font-size:13px;color:var(--dim);margin-top:4px}
+/* ---------------- nav ---------------- */
+nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(7,7,43,.86);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+nav .inner{max-width:1440px;min-height:var(--navh);margin:0 auto;padding:0 44px;display:flex;align-items:center;gap:22px;}
+nav .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:15px;letter-spacing:.04em;white-space:nowrap;}
+nav .brand img{width:auto;height:25px;filter:drop-shadow(0 0 7px rgba(77,141,255,.45));}
+nav .menu{margin-left:auto;display:flex;align-items:center;justify-content:flex-end;gap:4px;flex-wrap:wrap;}
+nav .menu a{color:var(--dim);font-size:12.5px;font-weight:650;padding:7px 10px;border:1px solid transparent;border-radius:6px;transition:.2s;}
+nav .menu a .i{color:var(--blue);font-size:10px;font-weight:800;}
+nav .menu a:hover{color:#fff;background:rgba(255,255,255,.035);border-color:var(--line);text-decoration:none;}
+nav .menu a.on{color:#fff;background:rgba(77,141,255,.12);border-color:var(--line2);box-shadow:0 0 12px rgba(77,141,255,.15);}
+nav .menu a.ext{margin-left:5px;color:#fff;border-color:var(--line2);background:rgba(77,141,255,.08);}
+nav .menu a.ext:hover{background:rgba(77,141,255,.2);}
 
-  section{padding:58px 0}
-  h2{font-size:clamp(22px,3.1vw,30px);margin:0 0 6px}
-  h2::after{content:"";display:block;width:52px;height:3px;border-radius:3px;margin-top:12px;
-    background:linear-gradient(90deg,var(--acc),transparent)}
-  .sub{color:var(--dim);margin:14px 0 28px;max-width:720px}
-  .demos{display:grid;grid-template-columns:1fr;gap:72px;justify-items:center;margin-top:8px}
-  @media(min-width:840px){.demos{grid-template-columns:repeat(2,minmax(0,400px));gap:90px;justify-content:center}}
-  .demo{width:100%;max-width:400px;background:#fff;border:1px solid var(--line);border-radius:18px;
-    overflow:hidden;box-shadow:var(--shadow)}
-  .demo .shot{position:relative;background:#0c0a16;line-height:0}
-  .demo img{width:100%;max-width:340px;height:auto;display:block;margin:0 auto}
+.shell{max-width:1440px;margin:0 auto;padding:0 64px;}
+.wrap{max-width:1320px;margin:0 auto;}
 
-  .chgrid{display:grid;grid-template-columns:1fr;gap:10px}
-  @media(min-width:680px){.chgrid{grid-template-columns:repeat(2,1fr)}}
-  @media(min-width:1000px){.chgrid{grid-template-columns:repeat(3,1fr)}}
-  .ch{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
-  .ch[open]{border-color:#c9bdee;box-shadow:0 10px 26px rgba(123,77,219,.12)}
-  .ch summary{cursor:pointer;list-style:none;padding:14px 16px;display:flex;align-items:center;gap:10px;
-    font-weight:700;font-size:15px;color:#2b2350}
-  .ch summary::-webkit-details-marker{display:none}
-  .ch summary .pm{width:16px;flex:none;color:var(--acc);font-weight:800}
-  .ch summary .pm::before{content:"+"}
-  .ch[open] summary .pm::before{content:"\2013"}
-  .ch summary .nm{flex:1}
-  .ch summary .tag{font-size:11px;font-weight:700;color:var(--acc);background:#f5f1ff;
-    border:1px solid #e2d8fb;border-radius:999px;padding:2px 9px;flex:none}
-  .ch .cbd{border-top:1px solid var(--line);padding:12px 16px 14px;background:var(--panel)}
-  .ch .crow{display:flex;gap:12px;font-size:14px;color:var(--dim);padding:5px 0;line-height:1.65}
-  .ch .crow .ck{flex:none;min-width:88px;font-weight:700;color:#3b3358}
-  .ch .crow .cv b{color:var(--fg)}
-  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
-  table{border-collapse:collapse;width:100%;min-width:640px;font-size:14.5px}
-  th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{background:var(--panel2);font-weight:700;white-space:nowrap;color:#3b3358}
-  tr:last-child td{border-bottom:0}
-  td.k{white-space:nowrap;font-weight:700;color:#3b3358}
+/* ---------------- hero ---------------- */
+header{
+  position:relative;min-height:calc(100vh - var(--navh));max-width:1440px;margin:0 auto;
+  padding:86px 64px 96px;display:grid;
+  grid-template-columns: 1fr 1.1fr; 
+  align-items: center; 
+  gap:clamp(40px, 5vw, 80px);
+}
+header::before{
+  content:"";position:absolute;left:64px;right:64px;bottom:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(67,238,238,.3),rgba(77,141,255,.12),transparent);
+}
+/* 左侧内容块 */
+.hero-main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.logo-hero{display:block;width:min(420px,68vw);height:auto;margin:0 0 24px;filter:drop-shadow(0 12px 32px rgba(77,141,255,.30));}
+.tagline{margin:0 0 20px;color:#dfe9ff;font-size:14px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;}
+.tagline::after{content:"  /  balance patch";color:var(--cyan);opacity:.74;font-size:.8em;}
+.tagline-en{display:none}
 
-  .steps{counter-reset:s;display:grid;gap:14px}
-  .step{position:relative;background:#fff;border:1px solid var(--line);border-radius:14px;
-    padding:20px 20px 20px 62px;box-shadow:var(--shadow)}
-  .step::before{counter-increment:s;content:counter(s);position:absolute;left:18px;top:18px;width:30px;height:30px;
-    border-radius:50%;display:grid;place-items:center;font-weight:800;color:#fff;font-size:15px;
-    background:linear-gradient(100deg,var(--acc),var(--acc2))}
-  .step h3{margin:0 0 6px;font-size:16px}
-  .step p{margin:0;color:var(--dim);font-size:14.5px}
-  pre{margin:12px 0 0;background:#f7f6fb;border:1px solid var(--line);border-radius:10px;padding:13px 15px;
-    overflow-x:auto;font-size:13.5px;color:#2b2350}
-  .hashbox{margin-top:8px;word-break:break-all;font-size:13px;color:var(--dim);
-    background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
-  .hashbox b{color:var(--fg)}
+.cta{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:16px;}
+.btn{
+  position:relative;display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:6px;
+  font-size:13.5px;font-weight:750;border:1px solid transparent;transition:.25s cubic-bezier(.4,0,.2,1);overflow:hidden;
+}
+.btn.primary{
+  color:#f0fbff;
+  background:url('assets/game-ui/btn-download.png') center/100% 100% no-repeat;
+  border-color:transparent;
+  box-shadow:0 8px 26px rgba(0,0,0,.36),0 0 22px rgba(169,102,224,.42);
+  text-shadow:0 1px 3px rgba(30,8,60,.85);
+}
+.btn.primary::after{
+  content:"";position:absolute;top:0;left:-100%;width:50%;height:100%;
+  background:linear-gradient(90deg, transparent, rgba(255,255,255,.2), transparent);
+  transform:skewX(-25deg);transition:.5s;
+}
+.btn.primary:hover::after{left:150%;}
+.btn.primary:hover{transform:translateY(-2px);color:#fff;border-color:transparent;background-image:url('assets/game-ui/btn-download-hover.png');box-shadow:0 12px 30px rgba(0,0,0,.44),0 0 34px rgba(196,140,255,.55);}
+.btn .btnmark{width:15px;height:15px;background:url('assets/game-ui/icon-b.png') center/contain no-repeat;display:inline-block;filter:drop-shadow(0 0 5px rgba(67,238,238,.85));}
 
-  footer{border-top:1px solid var(--line);padding:34px 0 54px;color:var(--dim);font-size:13.5px;text-align:center;background:var(--panel)}
-  footer a{color:var(--dim)}
-  footer .fine{margin-top:8px;font-size:12.5px;color:#8a85a0}
+.caps{display:flex;flex-wrap:wrap;gap:7px;}
+.cap{padding:4px 10px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:rgba(8,8,42,.55);font-size:11px;font-weight:700;}
+.cap.gold{color:var(--gold);border-color:rgba(240,223,99,.3);}
+.cap.cyan{color:var(--cyan);border-color:rgba(67,238,238,.3);}
+
+/* ====== 右侧区域：数据卡在上，改动点在下 ====== */
+.hero-right{
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* 卡片与下方改动点之间的间距 */
+  justify-content: center;
+  min-width: 0;
+}
+
+/* 独立数据面板卡片（完全保留原样，放在上面） */
+.hero-panel{
+  position:relative;
+  padding:30px 32px;
+  border:1px solid var(--line2);
+  border-radius:4px;
+  background:linear-gradient(135deg, rgba(20,18,67,.9), rgba(8,8,40,.95));
+  box-shadow:0 24px 52px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.02);
+  overflow:hidden;
+}
+/* 四角折线 */
+.hero-panel::before{content:"";position:absolute;top:-1px;left:-1px;width:24px;height:24px;border-top:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+.hero-panel::after{content:"";position:absolute;bottom:-1px;right:-1px;width:24px;height:24px;border-bottom:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+.hero-panel .corner-tl,.hero-panel .corner-br{position:absolute;width:24px;height:24px;}
+.hero-panel .corner-tr{top:-1px;right:-1px;border-top:2px solid var(--cyan);border-right:2px solid var(--cyan);}
+.hero-panel .corner-bl{bottom:-1px;left:-1px;border-bottom:2px solid var(--cyan);border-left:2px solid var(--cyan);}
+/* 内部网格背景 */
+.hero-panel::before{content:"";position:absolute;inset:0;z-index:0;opacity:.03;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+                   linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+  background-size:20px 20px;
+}
+.hero-panel .inner-content{position:relative;z-index:1;width:100%;}
+.hero-panel .eyebrow{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.22em;margin-bottom:12px;text-shadow:0 0 10px rgba(67,238,238,.4);}
+.hero-panel h3{margin:0 0 8px;color:#fff;font-size:22px;line-height:1.3;letter-spacing:.02em;}
+.hero-panel p{margin:0 0 20px;color:var(--dim);font-size:13px;}
+.hero-panel .panel-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:18px;
+  margin-top:16px;padding-top:16px;border-top:1px solid var(--line);
+}
+.hero-panel .panel-row:first-of-type{margin-top:0;padding-top:0;border-top:none;}
+.hero-panel .panel-row:last-child{padding-top:16px;border-top:1px solid var(--line);}
+.hero-panel .panel-row .k{color:var(--muted);font-size:10px;letter-spacing:.13em;margin-bottom:6px;}
+.hero-panel .panel-row .v{color:#fff;font-size:15px;font-weight:800;font-family:ui-monospace,Consolas,monospace;}
+.hero-panel .panel-row .v.highlight{color:var(--gold);text-shadow:0 0 12px rgba(240,223,99,.3);}
+
+/* 独立改动点列表（放在卡片下面） */
+.hero-lines{
+  display: grid;
+  gap: 10px;
+  width: 100%;
+}
+.hero-lines .line-item{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgba(77,141,255,.1) 0%, transparent 100%);
+  border-left: 2px solid transparent;
+  transition: .2s ease;
+}
+.hero-lines .line-item:hover{
+  background: linear-gradient(90deg, rgba(77,141,255,.18) 0%, transparent 100%);
+  transform: translateX(4px);
+}
+.hero-lines .line-item:nth-child(1){border-left-color:var(--gold);}
+.hero-lines .line-item:nth-child(2){border-left-color:var(--red);}
+.hero-lines .line-item:nth-child(3){border-left-color:var(--cyan);}
+.hero-lines i{width:6px;height:6px;flex:none;border-radius:50%;}
+.hero-lines div{color:#dfe3f2;font-size:13.5px;font-weight:600;letter-spacing:.02em;}
+
+/* ---------------- sections ---------------- */
+section{padding:104px 0;}
+section + section{border-top:1px solid rgba(108,180,252,.08);}
+.two-col{display:block}
+.col-head{max-width:930px;margin-bottom:34px;}
+.head{display:flex;align-items:center;gap:13px;margin-bottom:8px;}
+.head .no{flex:none;color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.16em;}
+.head .bar{flex:1;height:1px;background:linear-gradient(90deg,rgba(67,238,238,.42),rgba(77,141,255,.08));}
+h2{margin:0 0 7px;color:#fff;font-size:clamp(24px,3.1vw,33px);line-height:1.25;letter-spacing:-.015em;}
+.lead{max-width:760px;margin:0;color:var(--dim);font-size:14px;line-height:1.85;}
+
+/* ---------------- highlights ---------------- */
+.feature-section{padding-top:92px;padding-bottom:112px;}
+.feature-intro{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:30px;}
+.feature-link{flex:none;padding-bottom:4px;border-bottom:1px solid var(--line2);color:var(--blue-lt);font-size:12px;font-weight:700;transition:.2s;}
+.feature-link:hover{border-bottom-color:var(--cyan);color:var(--cyan);text-decoration:none;}
+.feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.feature-card{
+  position:relative;display:flex;flex-direction:column;min-height:238px;padding:24px 23px 20px;overflow:hidden;
+  border:1px solid var(--line);border-radius:6px;
+  background:linear-gradient(145deg,rgba(21,19,73,.91),rgba(8,8,40,.95));
+  box-shadow:0 10px 28px rgba(0,0,0,.24);transition:.25s ease;
+}
+.feature-card::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--cyan));}
+.feature-card-a::before{background:linear-gradient(90deg,var(--gold),var(--blue));}
+.feature-card-b::before{background:linear-gradient(90deg,var(--red),var(--orange));}
+.feature-card-c::before{background:linear-gradient(90deg,var(--cyan),var(--blue));}
+.feature-card:hover{
+  transform:translateY(-3px);border-color:var(--line2);
+  box-shadow:0 16px 40px rgba(0,0,0,.4),0 0 20px rgba(77,141,255,.08);
+}
+.feature-card:hover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(circle at 50% 0%, rgba(77,141,255,.08), transparent 70%);
+}
+.feature-top{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.feature-k{color:var(--blue-lt);font-size:9.5px;font-weight:800;letter-spacing:.18em;}
+.feature-no{color:#68749f;font-family:ui-monospace,Consolas,monospace;font-size:10px;font-weight:700;}
+.feature-card h3{margin:0 0 10px;color:#fff;font-size:20px;line-height:1.38;}
+.feature-card p{max-width:none;margin:0;color:var(--dim);font-size:13px;line-height:1.85;}
+.feature-spec{display:flex;flex-wrap:wrap;gap:6px;margin-top:15px;}
+.feature-spec span{
+  padding:4px 10px;border:1px solid var(--line);border-radius:4px;
+  background:rgba(77,141,255,.06);color:#dce6ff;font-size:11px;
+  font-family:ui-monospace,Consolas,monospace;
+}
+.feature-spec b{color:#fff;font-weight:800;}
+.feature-note{
+  display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:12px;
+  border-top:1px solid var(--line);color:#aab4d6;font-size:11px;
+}
+.feature-spec + .feature-note{margin-top:18px;}
+.feature-note span{width:4px;height:4px;flex:none;border-radius:50%;background:var(--cyan);box-shadow:0 0 7px rgba(67,238,238,.55);}
+
+/* ---------------- gameplay ---------------- */
+.clips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;}
+.clip{position:relative;overflow:hidden;border:1px solid var(--line2);border-radius:6px;background:rgba(8,8,40,.78);box-shadow:0 14px 34px rgba(0,0,0,.33);transition:.2s;}
+.clip:hover{border-color:var(--cyan);box-shadow:0 14px 34px rgba(0,0,0,.4),0 0 20px rgba(67,238,238,.1);}
+.clip .top{height:3px;background:linear-gradient(90deg,var(--blue),var(--cyan),var(--gold));}
+.clip img{width:100%;display:block;background:#05040a;aspect-ratio:16/9;object-fit:cover;}
+.clip .label{display:flex;align-items:center;gap:9px;padding:11px 14px 12px;color:#dce6ff;font-size:13px;font-weight:650;border-top:1px solid var(--line);}
+.clip .label .sq{width:7px;height:7px;flex:none;border-radius:2px;}
+
+/* ---------------- characters ---------------- */
+.characters-head{margin-bottom:28px;}
+.chgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+.ch{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:rgba(9,9,41,.73);transition:.2s ease;}
+.ch:hover{border-color:var(--line2);transform:translateY(-1px);}
+.ch[open]{border-color:var(--line2);box-shadow:0 0 0 1px rgba(67,238,238,.10),0 10px 24px rgba(0,0,0,.26);}
+.ch summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;padding:12px 13px;min-height:48px;color:#edf1ff;font-size:14px;font-weight:750;}
+.ch summary::-webkit-details-marker{display:none}
+.ch summary .pm{width:13px;flex:none;color:var(--cyan);font-weight:800;text-align:center;}
+.ch summary .pm::before{content:"+"}
+.ch[open] summary .pm::before{content:"\2013"}
+.ch summary .nm{flex:1;min-width:0;}
+.ch summary .bd2{display:flex;align-items:center;gap:4px;flex:none;}
+.ch summary .sq{width:14px;height:4px;border-radius:1px;display:block;}
+.ch summary .tag{flex:none;padding:2px 6px;border:1px solid var(--line);border-radius:3px;background:rgba(77,141,255,.10);color:var(--blue-lt);font-size:10px;font-weight:700;}
+.ch .cbd{padding:10px 13px 12px;border-top:1px solid var(--line);background:rgba(5,5,30,.44);}
+.ch .row{display:grid;grid-template-columns:minmax(86px,.7fr) minmax(0,1.3fr);gap:10px;padding:4px 0;color:var(--dim);font-size:12.5px;line-height:1.65;}
+.ch .row .ck{color:#cfe4ff;font-weight:700;}
+.ch .row .cv b.up{color:var(--green);font-weight:800}
+.ch .row .cv b.dn{color:#ff8585;font-weight:800}
+
+/* ---------------- install ---------------- */
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.step{position:relative;min-height:214px;padding:22px 19px;overflow:hidden;border:1px solid var(--line);border-radius:6px;background:linear-gradient(180deg,rgba(18,17,65,.83),rgba(8,8,40,.87));transition:.2s;}
+.step:hover{border-color:var(--line2);transform:translateY(-2px);}
+.step::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--cyan),rgba(67,238,238,0));opacity:.75;}
+.step .no{color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.18em;}
+.step h3{margin:9px 0 7px;color:#fff;font-size:16px;line-height:1.35;}
+.step p{margin:0;color:var(--dim);font-size:13px;}
+.flw{margin-top:14px;padding:10px 11px;border:1px solid var(--line);border-radius:5px;background:rgba(0,0,0,.30);color:#d8e5ff;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.8;}
+pre{margin:12px 0 0;padding:11px 12px;overflow-x:auto;border:1px solid var(--line);border-radius:5px;background:rgba(0,0,0,.32);color:#d8e5ff;font-size:12px;}
+.hash{margin-top:18px;overflow:hidden;border:1px solid var(--line2);border-radius:6px;background:rgba(8,8,40,.78);}
+.hash .h{padding:11px 15px;border-bottom:1px solid var(--line);background:rgba(67,238,238,.045);color:var(--cyan);font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;}
+.hash .v{padding:13px 15px;color:var(--gold);font-family:ui-monospace,Consolas,monospace;font-size:12.5px;word-break:break-all;}
+.safe{margin-top:14px;display:flex;align-items:center;gap:13px;padding:15px 17px;border:1px solid rgba(67,238,238,.25);border-radius:6px;background:rgba(67,238,238,.045);}
+.safe .big{display:flex;align-items:center;gap:8px;color:var(--cyan);font-size:13px;font-weight:800;white-space:nowrap;}
+.safe .big::before{content:"✓";font-size:15px;}
+.safe .txt{color:var(--dim);font-size:12.5px;}
+.safe .txt b{color:#fff;font-family:ui-monospace,Consolas,monospace;}
+
+/* ---------------- decorative art ---------------- */
+.deco-r{position:absolute;right:-5px;top:45px;width:230px;opacity:.07;pointer-events:none;filter:brightness(1.5);}
+.deco-l{position:absolute;left:-10px;bottom:-10px;width:200px;opacity:.065;pointer-events:none;}
+
+/* ---------------- footer ---------------- */
+footer{border-top:1px solid var(--line);padding:32px 0 48px;text-align:center;background:rgba(5,5,30,.84);}
+footer .fg{display:flex;justify-content:center;flex-wrap:wrap;gap:18px;margin-bottom:10px;font-size:13px;}
+footer .fine{color:#7d87b3;font-size:11.5px;line-height:1.9;}
+footer .fine b{color:#aab3d7}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1080px){
+  nav .inner{padding:0 28px}
+  .shell{padding-left:36px;padding-right:36px}
+  header{padding-left:36px;padding-right:36px;gap:48px;grid-template-columns:1fr;}
+  header::before{left:36px;right:36px}
+  .clips{gap:20px}
+  .chgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:860px){
+  nav .inner{min-height:auto;padding-top:11px;padding-bottom:11px}
+  nav .menu{margin-left:auto}
+  header{min-height:auto;grid-template-columns:1fr;gap:42px;padding-top:64px;padding-bottom:76px}
+  .hero-main{max-width:760px;justify-content:flex-start;}
+  .hero-right{max-width:760px;}
+  section{padding:84px 0}
+  .feature-grid{grid-template-columns:1fr}
+  .feature-card{min-height:0}
+  .steps{grid-template-columns:1fr}
+  .step{min-height:0}
+}
+@media(max-width:680px){
+  body{font-size:14px;background-attachment:scroll}
+  nav .inner{padding-left:18px;padding-right:18px;gap:12px}
+  nav .brand span{display:none}
+  nav .menu{gap:2px}
+  nav .menu a{padding:6px 7px;font-size:11px}
+  nav .menu a .i{display:none}
+  nav .menu a.ext{margin-left:2px}
+  .shell{padding-left:20px;padding-right:20px}
+  header{padding:52px 20px 64px;gap:34px}
+  header::before{left:20px;right:20px}
+  .logo-hero{width:min(360px,84vw);margin-bottom:18px}
+  .tagline{font-size:12px;letter-spacing:.12em}
+  .hero-lines{gap:8px;}
+  .hero-lines .line-item{padding:10px 12px}
+  .hero-lines div{font-size:13px}
+  .cta{margin-bottom:12px}
+  .btn{width:100%;justify-content:center}
+  .feature-intro{display:block}
+  .feature-link{display:inline-block;margin-top:12px}
+  .clips{grid-template-columns:1fr}
+  .chgrid{grid-template-columns:1fr}
+  .ch .row{grid-template-columns:1fr;gap:1px;padding:5px 0}
+  .safe{display:block}
+  .safe .big{margin-bottom:7px;white-space:normal}
+  .deco-r,.deco-l{display:none}
+}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="wrap">
-    <div class="brand">TH155<span>·MOD</span></div>
-    <div class="links">
-      <a href="#demo">实机演示</a>
-      <a href="#changes">改动清单</a>
-      <a href="#install">安装 / 联机</a>
-      <a href="https://github.com/KKHTAKOISHI/TH155-MOD">GitHub</a>
+  <div class="inner">
+    <div class="brand"><img src="assets/game-ui/logo.png" alt="东方凭依华"> <span>TH155·MOD</span></div>
+    <div class="menu">
+      <a href="#highlights"><span class="i">01</span> 重点改动</a>
+      <a href="#gameplay"><span class="i">02</span> 实机演示</a>
+      <a href="#characters"><span class="i">03</span> 角色改动</a>
+      <a href="#install"><span class="i">04</span> 安装 / 联机</a>
+      <a class="ext" href="https://github.com/KKHTAKOISHI/TH155-MOD">GitHub ↗</a>
     </div>
   </div>
 </nav>
 
-<header class="wrap">
-  <div class="eyebrow">东方凭依华 · Touhou 15.5 / AoCF</div>
-  <h1><span class="g">TH155-MOD</span></h1>
-  <p class="lead">
-    伤害修正重做、投技强化并新增独立按键、<b>LW 可以接 A / B / C 系后摇</b>、
-    12 名角色手感逐个重调 —— 全部改动都封装在一个 <code>th155b.pak</code> 里。
-  </p>
-  <div class="cta">
-    <a class="btn primary" href="https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155b.pak">
-      ↓ 下载 th155b.pak <span style="opacity:.8;font-weight:400">91.8 MB</span>
-    </a>
-    <a class="btn ghost" href="#changes">查看全部改动 ↓</a>
-  </div>
-  <div class="metaline">需要正版游戏 · <b>th155.pak 保持原版不动</b> · 可完整还原</div>
+<header id="hero" class="shell">
+  <!-- 左侧：Logo + 下载按钮 -->
+  <div class="hero-main">
+    <img class="logo-hero" src="assets/game-ui/logo.png" alt="东方凭依华 标题 LOGO">
+    <p class="tagline"><span class="tagline-en">BALANCE PATCH</span></p>
 
-  <div class="stats">
-    <div class="stat"><div class="n">12</div><div class="t">名角色手感重调</div></div>
-    <div class="stat"><div class="n">20+</div><div class="t">项机制与招式改动</div></div>
-    <div class="stat"><div class="n">1</div><div class="t">个文件，91.8 MB</div></div>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155b.pak"><i class="btnmark"></i>下载 th155b.pak <span style="opacity:.85;font-weight:600;margin-left:4px;">91.8 MB</span></a>
+    </div>
+    <div class="caps">
+      <span class="cap">v 1.21b</span>
+      <span class="cap gold">91.8 MB</span>
+      <span class="cap">联机兼容</span>
+    </div>
+  </div>
+
+  <!-- 右侧：数据卡在上，改动点在下 -->
+  <div class="hero-right">
+    <!-- 1. 完全原样的数据面板卡片（放上面） -->
+    <aside class="hero-panel">
+      <div class="corner-tl"></div><div class="corner-tr"></div>
+      <div class="corner-bl"></div><div class="corner-br"></div>
+      <div class="inner-content">
+        <div class="eyebrow">TH155-MOD</div>
+        <h3>Antinomy of Common Flowers</h3>
+        <p>四项系统级改动</p>
+
+        <div class="panel-row">
+          <div>
+            <div class="k">PACKAGE</div>
+            <div class="v">th155b.pak</div>
+          </div>
+          <div style="text-align:right">
+            <div class="k">SIZE</div>
+            <div class="v highlight">91.8 MB</div>
+          </div>
+        </div>
+
+        <div class="panel-row">
+          <div>
+            <div class="k">SYSTEM</div>
+            <div class="v">4 项重点改动</div>
+          </div>
+          <div style="text-align:right">
+            <div class="k">CHARACTERS</div>
+            <div class="v">12 名角色</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 2. 独立的改动点列表（放下面） -->
+    <div class="hero-lines">
+      <div class="line-item"><i style="background:var(--gold);box-shadow:0 0 10px var(--gold);"></i>伤害修正改为固定值，打康固定 ×1.2</div>
+      <div class="line-item"><i style="background:var(--red);box-shadow:0 0 10px var(--red);"></i>投技统一 1100，拆投窗口缩短至 9 帧</div>
+      <div class="line-item"><i style="background:var(--cyan);box-shadow:0 0 10px var(--cyan);"></i>LW 可取消 A / B / C 系后摇</div>
+    </div>
   </div>
 </header>
 
-<section id="demo" class="wrap">
-  <h2>实机演示</h2>
-  <div class="demos">
-    <div class="demo">
-      <div class="shot">
-        <img src="https://kkhhtahk.oss-cn-hongkong.aliyuncs.com/koishi-lw.gif" alt="古明地恋 Last Word 实机完整录制" loading="lazy">
+<section id="highlights" class="shell feature-section">
+  <div class="wrap">
+    <div class="feature-intro">
+      <div>
+        <div class="head"><span class="no">01 / HIGHLIGHTS</span><span class="bar"></span></div>
+        <h2>重点改动</h2>
+        <p class="lead">四项系统级调整：伤害修正、投技判定、拆投窗口与 LW 接入规则。</p>
+      </div>
+      <a class="feature-link" href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">完整改动清单 ↗</a>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature-card feature-card-a">
+        <div class="feature-top">
+          <span class="feature-k">DAMAGE SYSTEM</span>
+          <span class="feature-no">伤害</span>
+        </div>
+        <h3>伤害修正改成固定值</h3>
+        <p>取消满血 ×1.25 / 残血 ×0.75 的动态递减，打康固定 ×1.2。</p>
+        <div class="feature-spec">
+          <span>普通：<b>×1.0</b></span>
+          <span>打康：<b>×1.2</b></span>
+        </div>
+        
+      </article>
+
+      <article class="feature-card feature-card-b">
+        <div class="feature-top">
+          <span class="feature-k">THROW / BREAK</span>
+          <span class="feature-no">投技</span>
+        </div>
+        <h3>投技与拆投调整</h3>
+        <p>投技统一 1100；拆投窗口由 15 帧缩短到 9 帧，并新增独立投技键 <kbd>E</kbd>。</p>
+        <div class="feature-spec">
+          <span>投技：<b>1100</b></span>
+          <span>拆投：<b>9 帧</b></span>
+        </div>
+        
+      </article>
+
+      <article class="feature-card feature-card-c">
+        <div class="feature-top">
+          <span class="feature-k">LAST WORD</span>
+          <span class="feature-no">LW</span>
+        </div>
+        <h3>LW 可以接 A / B / C 后摇</h3>
+        <p>中轴可从 A / B / C 系后摇接入 LW；起手帧不可取消，圣白莲 4C 为例外。</p>
+        <div class="feature-spec">
+          <span>可接：<b>A</b></span>
+          <span><b>B</b></span>
+          <span><b>C</b></span>
+        </div>
+        
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="gameplay" class="shell">
+  <div class="wrap two-col">
+    <div class="col-head">
+    <div class="head"><span class="no">02 / GAMEPLAY</span><span class="bar"></span></div>
+    <h2>实机演示</h2>
+    
+    </div>
+    <div class="col-body">
+    <div class="clips">
+      <div class="clip">
+        <div class="top"></div>
+        <img src="https://kkhhtahk.oss-cn-hongkong.aliyuncs.com/koishi-lw.gif" alt="古明地恋 Last Word 实机演示" loading="lazy">
+        <div class="label"><i class="sq" style="background:var(--cyan)"></i>LW 可取消 A / B / C 系后摇</div>
+      </div>
+      <div class="clip">
+        <div class="top"></div>
+        <img src="https://kkhhtahk.oss-cn-hongkong.aliyuncs.com/mokou-lw.gif" alt="藤原妹紅 Last Word 实机演示" loading="lazy">
+        <div class="label"><i class="sq" style="background:var(--gold)"></i>LW 伤害调整（按实测校准）</div>
       </div>
     </div>
-    <div class="demo">
-      <div class="shot">
-        <img src="https://kkhhtahk.oss-cn-hongkong.aliyuncs.com/mokou-lw.gif" alt="藤原妹紅 Last Word 实机完整录制" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="characters" class="shell">
+  <div class="wrap two-col" style="position:relative">
+    <img class="deco-r" src="assets/game-ui/deco-4.png" alt="">
+    <div class="col-head">
+    <div class="head"><span class="no">03 / CHARACTERS</span><span class="bar"></span></div>
+    <h2>角色改动</h2>
+    
+    </div>
+    <div class="col-body">
+
+    <div class="head"><span class="no">CHARACTER CHANGES</span><span class="bar"></span></div>
+    <div class="chgrid">
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">神子</span>
+          <span class="bd2"><i class="sq" style="background:var(--green)"></i><i class="sq" style="background:var(--red)"></i></span>
+          <span class="tag">4 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">符卡「日出」</span><span class="cv">伤害 <b class="dn">−500</b></span></div>
+          <div class="row"><span class="ck">符卡「人符」</span><span class="cv">伤害 <b class="up">+500</b>（有袍 / 无袍各 +500）</span></div>
+          <div class="row"><span class="ck">太阳拳 j5C</span><span class="cv">判定框缩小一半</span></div>
+          <div class="row"><span class="ck">红袍 DA</span><span class="cv">9 帧</span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">狸子（猯藏）</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i></span>
+          <span class="tag">3 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">6B 弹丸</span><span class="cv">最长持续 <b class="dn">40 → 35 帧</b></span></div>
+          <div class="row"><span class="ck">变形符卡</span><span class="cv">cost <b class="up">800 → 1000</b></span></div>
+          <div class="row"><span class="ck">8A</span><span class="cv">攻击框处新增受击框，被打掉一枚叶子</span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">哆来咪</span>
+          <span class="bd2"><i class="sq" style="background:var(--cyan)"></i></span>
+          <span class="tag">2 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">4C（后+C）</span><span class="cv">回调到 1.10 版本</span></div>
+          <div class="row"><span class="ck">6B（前+B）</span><span class="cv">回调到 1.10 版本</span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">华扇</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i><i class="sq" style="background:var(--cyan)"></i></span>
+          <span class="tag">2 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">彩虹球</span><span class="cv">伤害削弱 <b class="dn">400</b></span></div>
+          <div class="row"><span class="ck">老鹰</span><span class="cv">只在球真正命中时追击</span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">堇子</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i><i class="sq" style="background:var(--green)"></i></span>
+          <span class="tag">3 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">hb</span><span class="cv">现在可以弹墙</span></div>
+          <div class="row"><span class="ck">瞬移</span><span class="cv">后摇减少</span></div>
+          <div class="row"><span class="ck">LW</span><span class="cv">伤害削弱 <b class="dn">450 → 410</b></span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">恋恋</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i><i class="sq" style="background:var(--green)"></i><i class="sq" style="background:var(--cyan)"></i></span>
+          <span class="tag">5 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">瞬移</span><span class="cv">无后摇</span></div>
+          <div class="row"><span class="ck">A 系超反应</span><span class="cv">打空 / 打防 / 擦弹触发，干净命中不触发</span></div>
+          <div class="row"><span class="ck">B 系超反应</span><span class="cv">打中不触发，打空 / 打防触发</span></div>
+          <div class="row"><span class="ck">8C 升龙</span><span class="cv">打中不触发</span></div>
+          <div class="row"><span class="ck">8A / LW</span><span class="cv">8A 攻击范围增加；LW 伤害 <b class="dn">−500</b></span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">女苑</span>
+          <span class="bd2"><i class="sq" style="background:var(--green)"></i></span>
+          <span class="tag">1 项</span></summary>
+        <div class="cbd"><div class="row"><span class="ck">LW</span><span class="cv">抓取判定框增大</span></div></div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">魔理沙</span>
+          <span class="bd2"><i class="sq" style="background:var(--cyan)"></i></span>
+          <span class="tag">1 项</span></summary>
+        <div class="cbd"><div class="row"><span class="ck">冲刺 6D</span><span class="cv">前摇减少</span></div></div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">小碗（针妙丸）</span>
+          <span class="bd2"><i class="sq" style="background:var(--green)"></i></span>
+          <span class="tag">3 项</span></summary>
+        <div class="cbd">
+          <div class="row"><span class="ck">空中冲刺</span><span class="cv">前摇减少</span></div>
+          <div class="row"><span class="ck">符卡「小槌」</span><span class="cv">范围增加、击退效果增强</span></div>
+          <div class="row"><span class="ck">符卡「小槌」</span><span class="cv">伤害保持原版</span></div>
+        </div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">白莲</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i></span>
+          <span class="tag">1 项</span></summary>
+        <div class="cbd"><div class="row"><span class="ck">大日如来</span><span class="cv">符卡伤害减少（每次命中 <b class="dn">−50</b>）</span></div></div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">妹紅</span>
+          <span class="bd2"><i class="sq" style="background:var(--red)"></i></span>
+          <span class="tag">1 项</span></summary>
+        <div class="cbd"><div class="row"><span class="ck">LW</span><span class="cv">伤害削弱 <b class="dn">600</b>（每击 600 → 539）</span></div></div>
+      </details>
+
+      <details class="ch">
+        <summary><span class="pm"></span><span class="nm">秦心（こころ）</span>
+          <span class="bd2"><i class="sq" style="background:var(--green)"></i></span>
+          <span class="tag">1 项</span></summary>
+        <div class="cbd"><div class="row"><span class="ck">6A</span><span class="cv">打中后连段补正加强：每次命中多压 <b class="up">5%</b>（10% → 15%）</span></div></div>
+      </details>
+
+    </div>
+    <p style="margin-top:18px;font-size:13px;color:var(--dim)">
+      完整清单见仓库 <a href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">CHANGES.md</a>。
+    </p>
+    </div>
+  </div>
+</section>
+
+<section id="install" class="shell">
+  <div class="wrap two-col" style="position:relative">
+    <img class="deco-l" src="assets/game-ui/deco-1.png" alt="">
+    <div class="col-head">
+    <div class="head"><span class="no">04 / INSTALL</span><span class="bar"></span></div>
+    <h2>安装 / 联机</h2>
+    
+    </div>
+    <div class="col-body">
+
+    <div class="steps">
+      <div class="step">
+        <div class="no">01 / BACK UP</div>
+        <h3>备份原文件</h3>
+        <p>先把游戏目录里的原文件改名，方便随时还原。</p>
+        <div class="flw">th155b.pak<br>&nbsp;&nbsp;↓ 改名<br>th155b.pak.bak</div>
+      </div>
+      <div class="step">
+        <div class="no">02 / REPLACE</div>
+        <h3>下载并替换</h3>
+        <p>下载后放进游戏目录，覆盖原来的同名文件。</p>
+        <div class="flw">th155b.pak<br><span style="color:var(--gold)">91.8 MB</span><br>覆盖 → 游戏目录</div>
+      </div>
+      <div class="step">
+        <div class="no">03 / VERIFY</div>
+        <h3>联机前核对</h3>
+        <p>双方必须使用完全一致的 pak。大小相同不足以保证一致，请比对 SHA256：</p>
+        <pre>certutil -hashfile th155b.pak SHA256</pre>
       </div>
     </div>
-  </div>
-</section>
 
-
-<section id="changes" class="wrap">
-  <h2>改动清单</h2>
-  <p class="sub">完整列表也在仓库的 <a href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">CHANGES.md</a> 里。</p>
-
-  <h3 style="margin:24px 0 12px;font-size:17px">系统级</h3>
-  <div class="tablewrap">
-    <table>
-      <tr><th style="width:190px">项</th><th>内容</th></tr>
-      <tr><td class="k">伤害修正</td><td>满血 ×1.25 / 残血 ×0.75 的递减改为 <b>恒定 ×1.0</b>；打康伤害固定 <b>×1.2</b></td></tr>
-      <tr><td class="k">投技 · 伤害</td><td>全角色统一 <b>1100</b></td></tr>
-      <tr><td class="k">投技 · 拆投</td><td>窗口 <b>15 → 9 帧</b></td></tr>
-      <tr><td class="k">投技 · 独立按键</td><td>键盘默认 <kbd>E</kbd>，可在「按键设置」改绑；<b>该键也能拆投</b></td></tr>
-      <tr><td class="k">LW · 取消后摇</td><td>可取消 <b>A / B / C 系</b>招数后摇，<b>仅限中轴</b>，起手帧不可取消；<b>圣白莲 4C 例外（不能取消）</b></td></tr>
-    </table>
-  </div>
-
-  <h3 style="margin:30px 0 12px;font-size:17px">角色 — 点击角色名展开</h3>
-  <div class="chgrid">
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">神子</span><span class="tag">4 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">符卡「日出」</span><span class="cv">伤害 <b>−500</b></span></div>
-        <div class="crow"><span class="ck">符卡「人符」</span><span class="cv">伤害 <b>+500</b>（有袍 / 无袍各 +500）</span></div>
-        <div class="crow"><span class="ck">太阳拳 j5C</span><span class="cv">判定框缩小一半</span></div>
-        <div class="crow"><span class="ck">红袍 DA</span><span class="cv">9 帧</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">狸子（猯藏）</span><span class="tag">3 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">6B 弹丸</span><span class="cv">最长持续 <b>40 → 35 帧</b></span></div>
-        <div class="crow"><span class="ck">变形符卡</span><span class="cv">cost <b>800 → 1000</b></span></div>
-        <div class="crow"><span class="ck">8A</span><span class="cv">攻击框处新增受击框（攻击区域也能被打到），且被打掉一枚叶子（叶子 −1）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">哆来咪</span><span class="tag">2 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">4C（后+C）</span><span class="cv"><b>回调到 1.10 版本</b></span></div>
-        <div class="crow"><span class="ck">6B（前+B）</span><span class="cv"><b>回调到 1.10 版本</b></span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">华扇</span><span class="tag">2 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">彩虹球</span><span class="cv">伤害削弱 <b>400</b></span></div>
-        <div class="crow"><span class="ck">老鹰</span><span class="cv">只在球<b>真正命中</b>时追击（打空 / 被冲刺擦弹时不追击）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">堇子</span><span class="tag">3 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">hb</span><span class="cv">现在<b>可以弹墙</b></span></div>
-        <div class="crow"><span class="ck">瞬移</span><span class="cv">后摇减少</span></div>
-        <div class="crow"><span class="ck">LW</span><span class="cv">伤害削弱（每 hit <b>450 → 410</b>）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">恋恋</span><span class="tag">5 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">瞬移</span><span class="cv"><b>无后摇</b></span></div>
-        <div class="crow"><span class="ck">A 系超反应</span><span class="cv">打空 / 打防 / 擦弹触发，<b>干净命中不触发</b></span></div>
-        <div class="crow"><span class="ck">B 系超反应</span><span class="cv">打中不触发，打空 / 打防触发</span></div>
-        <div class="crow"><span class="ck">8C 升龙</span><span class="cv">打中不触发</span></div>
-        <div class="crow"><span class="ck">8A / LW</span><span class="cv"><b>8A 攻击范围增加</b>；LW 伤害 <b>−500</b></span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">女苑</span><span class="tag">1 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">LW</span><span class="cv">抓取判定框增大</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">魔理沙</span><span class="tag">1 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">冲刺 6D</span><span class="cv">前摇减少</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">小碗（针妙丸）</span><span class="tag">3 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">空中冲刺</span><span class="cv">前摇减少</span></div>
-        <div class="crow"><span class="ck">符卡「小槌」</span><span class="cv">范围增加、击退效果增强</span></div>
-        <div class="crow"><span class="ck">符卡「小槌」</span><span class="cv">（伤害保持原版）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">白莲</span><span class="tag">1 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">大日如来</span><span class="cv">符卡伤害减少（每次命中 <b>−50</b>）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">妹紅</span><span class="tag">1 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">LW</span><span class="cv">伤害削弱 <b>600</b>（每击 600 → 539）</span></div>
-        </div>
-      </details>
-      <details class="ch">
-        <summary><span class="pm"></span><span class="nm">秦心（こころ）</span><span class="tag">1 项</span></summary>
-        <div class="cbd">
-        <div class="crow"><span class="ck">6A</span><span class="cv">打中的连段补正加强：每次命中把对方后续伤害补正多压 <b>5%</b>（10% → <b>15%</b>）</span></div>
-        </div>
-      </details>
-  </div>
-</section>
-
-<section id="install" class="wrap">
-  <h2>安装 / 联机</h2>
-  <p class="sub">整个过程只有一个文件。</p>
-  <div class="steps">
-    <div class="step">
-      <h3>备份原文件</h3>
-      <p>先把游戏目录里的 <code>th155b.pak</code> 改名成 <code>th155b.pak.bak</code>，方便随时还原。</p>
+    <div class="hash">
+      <div class="h">SHA256 · 应完全一致</div>
+      <div class="v">0c3669242500541cb3827dfe29adc692a18181c1a1fd30d52cd716488cfef7b1</div>
     </div>
-    <div class="step">
-      <h3>下载并替换</h3>
-      <p>下载 <a href="https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155b.pak">th155b.pak</a>（91.8 MB），放进游戏目录，覆盖原来的同名文件。</p>
+
+    <div class="safe">
+      <div class="big">安全可还原 · th155.pak 保持原版不动</div>
+      <div class="txt">所有改动都是 <b>pak 内等长原地替换</b>，不重打包、不改 exe。把备份改回原名覆盖即可完全恢复原版。</div>
     </div>
-    <div class="step">
-      <h3>联机前核对版本</h3>
-      <p>联机双方必须使用<b>完全一致</b>的 <code>th155b.pak</code>。大小相同并不足以保证一致，请比对 SHA256：</p>
-      <pre>certutil -hashfile th155b.pak SHA256</pre>
-      <div class="hashbox">应为 <b>0c3669242500541cb3827dfe29adc692a18181c1a1fd30d52cd716488cfef7b1</b>（96291705 字节）</div>
     </div>
   </div>
 </section>
-
 
 <footer>
-  <div class="wrap">
-    <div>
-      <a href="https://github.com/KKHTAKOISHI/TH155-MOD">GitHub 仓库</a> ·
-      <a href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">改动清单</a> ·
+  <div class="shell">
+    <div class="fg">
+      <a href="https://github.com/KKHTAKOISHI/TH155-MOD">GitHub 仓库</a>
+      <a href="https://github.com/KKHTAKOISHI/TH155-MOD/blob/main/CHANGES.md">改动清单</a>
       <a href="https://github.com/KKHTAKOISHI/TH155-MOD/releases/tag/pak-files">Releases</a>
     </div>
     <div class="fine">
-      仅用于学习研究与同人交流。游戏本体资源版权归 Twilight Frontier 所有，请自行持有正版游戏。
+      仅用于学习研究与同人交流。<b>游戏本体资源版权归 Twilight Frontier 所有</b>，请自行持有正版游戏。<br>
+      本站不提供游戏本体，仅提供修改后的归档文件（pak）。
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var links = [].slice.call(document.querySelectorAll('a[href^="#"]'));
+
+  links.forEach(function(a){
+    a.addEventListener('click', function(e){
+      var h = a.getAttribute('href') || '';
+      if(h.charAt(0) !== '#') return;
+      var el = document.getElementById(h.slice(1));
+      if(!el) return;
+      e.preventDefault();
+      var y = el.getBoundingClientRect().top + window.scrollY - 78;
+      window.scrollTo({top:y, behavior:'smooth'});
+    });
+  });
+
+  var menu = [].slice.call(document.querySelectorAll('nav .menu a[href^="#"]'));
+  function menuScroll(){
+    var mid = window.scrollY + 120, cur = -1;
+    menu.forEach(function(a, i){
+      var el = document.getElementById(a.getAttribute('href').slice(1));
+      if(el && el.offsetTop <= mid) cur = i;
+    });
+    menu.forEach(function(a, i){ a.classList.toggle('on', i === cur); });
+  }
+  window.addEventListener('scroll', menuScroll, {passive:true});
+  menuScroll();
+})();
+</script>
 
 </body>
 </html>
