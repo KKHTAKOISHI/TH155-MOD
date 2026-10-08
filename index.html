@@ -513,7 +513,7 @@ footer .fine b{color:#aab3d7}
         <div class="panel-row">
           <div>
             <div class="k">SYSTEM</div>
-            <div class="v">三项重点改动</div>
+            <div class="v">五项重点改动</div>
           </div>
           <div style="text-align:right">
             <div class="k">CHARACTERS</div>
@@ -528,6 +528,8 @@ footer .fine b{color:#aab3d7}
       <div class="line-item"><i style="background:var(--gold);box-shadow:0 0 10px var(--gold);"></i>伤害修正改为固定值，打康固定 ×1.2</div>
       <div class="line-item"><i style="background:var(--red);box-shadow:0 0 10px var(--red);"></i>投技统一 1100，拆投窗口缩短至 9 帧</div>
       <div class="line-item"><i style="background:var(--cyan);box-shadow:0 0 10px var(--cyan);"></i>LW 可取消 A / B / C 系后摇</div>
+      <div class="line-item"><i style="background:var(--green);box-shadow:0 0 10px var(--green);"></i>练习模式新增打防帧数表（显示硬直差）</div>
+      <div class="line-item"><i style="background:var(--orange);box-shadow:0 0 10px var(--orange);"></i>录像回放支持 ← 快退 / → 快进 5 秒</div>
     </div>
   </div>
 </header>
@@ -538,7 +540,7 @@ footer .fine b{color:#aab3d7}
       <div>
         <div class="head"><span class="no">01 / HIGHLIGHTS</span><span class="bar"></span></div>
         <h2>重点改动</h2>
-        <p class="lead">三项系统级调整：伤害修正、投技判定与 LW 接入规则。</p>
+        <p class="lead">三项系统级调整（伤害修正、投技判定、LW 接入规则），另加练习模式打防帧数表与录像回放快退 / 快进。</p>
       </div>
     </div>
 
@@ -577,13 +579,41 @@ footer .fine b{color:#aab3d7}
           <span class="feature-no">LW</span>
         </div>
         <h3>LW 可以接 A / B / C 后摇</h3>
-        <p>中轴可从 A / B / C 系后摇接入 LW；圣白莲 4C 为例外。</p>
+        <p>中轴可从 A / B / C 系后摇接入 LW；<b>起手（发动）帧不可取消</b>，伤害倍率维持原版规则。例外：圣白莲 4C 不能用 LW 取消。</p>
         <div class="feature-spec">
           <span>可接：<b>A</b></span>
           <span><b>B</b></span>
           <span><b>C</b></span>
+          <span>倍率：<b>×0.6~1.0</b></span>
         </div>
         
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-top">
+          <span class="feature-k">PRACTICE MODE</span>
+          <span class="feature-no">练习</span>
+        </div>
+        <h3>练习模式显示打防帧数表</h3>
+        <p>练习模式中显示每一招的<b>硬直差</b>（打防帧数表），显示时长 <b>1 秒</b>。</p>
+        <div class="feature-spec">
+          <span>硬直差：<b>显示</b></span>
+          <span>时长：<b>1 秒</b></span>
+        </div>
+      </article>
+
+      <article class="feature-card">
+        <div class="feature-top">
+          <span class="feature-k">REPLAY SEEK</span>
+          <span class="feature-no">录像</span>
+        </div>
+        <h3>录像回放支持 5 秒快退 / 快进</h3>
+        <p>回放中按 <kbd>←</kbd> 快退 5 秒、按 <kbd>→</kbd> 快进 5 秒。原理是从第 0 帧按录像里的输入重算到目标帧，因此<b>越靠录像后段，重算越久</b>（会有短暂卡顿）。</p>
+        <div class="feature-spec">
+          <span>快退：<b>←</b></span>
+          <span>快进：<b>→</b></span>
+          <span>步长：<b>5 秒</b></span>
+        </div>
       </article>
     </div>
   </div>
@@ -641,11 +671,12 @@ footer .fine b{color:#aab3d7}
       <details class="ch">
         <summary><span class="pm"></span><span class="nm">狸子（猯藏）</span>
           <span class="bd2"><i class="sq" style="background:var(--red)"></i></span>
-          <span class="tag">3 项</span></summary>
+          <span class="tag">4 项</span></summary>
         <div class="cbd">
           <div class="row"><span class="ck">6B 弹丸</span><span class="cv">最长持续 <b class="dn">40 → 35 帧</b></span></div>
           <div class="row"><span class="ck">变形符卡</span><span class="cv">cost <b class="up">800 → 1000</b></span></div>
           <div class="row"><span class="ck">8A</span><span class="cv">攻击框处新增受击框，被打掉一枚叶子</span></div>
+          <div class="row"><span class="ck">8A / j8A</span><span class="cv">修复掉叶子泄漏（叶子事件未在招式结束时清除）</span></div>
         </div>
       </details>
 
@@ -779,8 +810,8 @@ footer .fine b{color:#aab3d7}
     </div>
 
     <div class="hash">
-      <div class="h">SHA256 · 应完全一致</div>
-      <div class="v">0c3669242500541cb3827dfe29adc692a18181c1a1fd30d52cd716488cfef7b1</div>
+      <div class="h">SHA256 · 应完全一致 · 96,291,705 B</div>
+      <div class="v">2cb81229ce8880f5446f72c1841d599da9baf3a6f4202556227e60e23c29d377</div>
     </div>
 
     <div class="safe">
