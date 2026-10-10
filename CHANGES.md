@@ -2,7 +2,8 @@
 
 > **生效包：`th155b.pak`** —— 本项目的**全部改动都在这个文件里**（它是覆盖包，游戏读取同名条目时以它为准）。
 > 只需替换游戏目录中的 `th155b.pak`，`th155.pak` 保持原版即可（包括符卡数值，已改为在 `th155b.pak` 内覆盖）。
-> 所有改动都是 pak 内**等长原地替换**：不重打包、不修改 exe，用原版 `.bak` 覆盖即可完整还原。
+> `th155b.pak` 内的改动都是**等长原地替换**：不重打包、不修改 exe。
+> **`Netcode.dll` 也做过改动**（跳转触发代码写进了它内嵌的 `battle_team.nut`），联机时双方需使用同一份 DLL。
 > 下载与校验见 [README.md](README.md)。
 
 ## 练习模式：帧数条增强
@@ -27,7 +28,10 @@
 - **快退 5 秒（450 帧）**：方向推到**最左**
 - 快进是**瞬时**的（直接多跑几次战斗更新）；**快退需要从第 0 帧重新模拟**，因此**越靠后越慢**
 - **跳转期间碰到录像结尾不会中断播放**：`battle_replay.nut` 里加了守卫，避免跳转途中 `EndWithFade()` 把场景拆掉导致状态失控
-- 实现位置：触发在 `battle_team.nut` 的 `PlayerTeamData` 每帧回调；执行在 `battle_on_hit.nut` 的 `ContactTest` 开头
+- 实现位置：触发在 **`Netcode.dll` 内嵌的 `battle_team.nut`**（PlayerTeamData.Update 每帧回调）；执行在 `battle_on_hit.nut` 的 `ContactTest` 开头
+- **跳转帧数精确**：模拟循环自己数圈数（`k_ < n_`），不再依赖外部帧计数，快进快退都精确 450 帧
+- **跳转期间逐帧清理特效**：循环里调用 `::effect.Clear()`，命中火花等不再堆积（`::effect` 与 `battle.group_effect` 是两套不同的系统）
+- **`seek_ge` 槽位用 `<-` 创建**：原来用 `=`，槽位不存在时一按跳转就报 `the index 'seek_ge' does not exist`
 
 ## 系统级
 
