@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>TH155-MOD</title>
-<meta name="description" content="东方凭依华（AoCF）平衡改造版 pak。只替换一个 th155b.pak，不改 EXE、不动原版资源。">
+<meta name="description" content="东方凭依华（AoCF）平衡改造版 pak，含练习模式帧数条与录像 5 秒快进快退。替换 th155b.pak 等文件，不改 exe、不动原版资源。">
 <link rel="icon" href="https://kkhhtahk.oss-cn-hongkong.aliyuncs.com/logo-%E4%B8%9C%E6%96%B9%E5%87%AD%E4%BE%9D%E5%8D%8E.png">
 <style>
 :root{
@@ -597,10 +597,10 @@ footer .fine b{color:#aab3d7}
           <span class="feature-no">练习</span>
         </div>
         <h3>练习模式显示打防帧数表</h3>
-        <p>练习模式中显示每一招的<b>硬直差</b>（打防帧数表），显示时长 <b>1 秒</b>。</p>
+        <p>练习模式中显示<b>两条</b>帧数条：P1（上，绿=发生 / 红=持续 / 蓝=后摇）与 P2（下，灰=命中前 / 紫=打防硬直），两条从同一起点逐帧同步。</p>
         <div class="feature-spec">
           <span>硬直差：<b>显示</b></span>
-          <span>时长：<b>1 秒</b></span>
+          <span>淡出：<b>240 帧</b></span>
         </div>
       </article>
 
@@ -610,7 +610,7 @@ footer .fine b{color:#aab3d7}
           <span class="feature-no">录像</span>
         </div>
         <h3>录像回放支持 5 秒快退 / 快进</h3>
-        <p>回放中按 <kbd>←</kbd> 快退 5 秒、按 <kbd>→</kbd> 快进 5 秒。原理是从第 0 帧按录像里的输入重算到目标帧，因此<b>越靠录像后段，重算越久</b>（会有短暂卡顿）。</p>
+        <p>回放中把方向推到最右 <kbd>→</kbd> 快进 5 秒、推到最左 <kbd>←</kbd> 快退 5 秒。<b>快进是瞬时的</b>；<b>快退要从第 0 帧重算</b>，因此越靠录像后段越慢（会有短暂卡顿）。跳转期间产生的命中特效会自动清理，画面保持干净。</p>
         <div class="feature-spec">
           <span>快退：<b>←</b></span>
           <span>快进：<b>→</b></span>
@@ -795,13 +795,13 @@ footer .fine b{color:#aab3d7}
         <div class="no">01 / BACK UP</div>
         <h3>备份原文件</h3>
         <p>先把游戏目录里的原文件改名，方便随时还原。</p>
-        <div class="flw">th155b.pak<br>&nbsp;&nbsp;↓ 改名<br>th155b.pak.bak</div>
+        <div class="flw">th155b.pak / netcode.ini<br>Netcode.dll / th155r.exe<br>&nbsp;&nbsp;↓ 备份<br>*.bak</div>
       </div>
       <div class="step">
         <div class="no">02 / REPLACE</div>
         <h3>下载并替换</h3>
         <p>下载后放进游戏目录，覆盖原来的同名文件。</p>
-        <div class="flw">th155b.pak<br><span style="color:var(--gold)">91.8 MB</span><br>覆盖 → 游戏目录</div>
+        <div class="flw">th155b.pak + netcode.ini<br>+ Netcode.dll + th155r.exe<br><span style="color:var(--gold)">覆盖 → 游戏目录</span></div>
       </div>
       <div class="step">
         <div class="no">03 / VERIFY</div>
@@ -813,12 +813,12 @@ footer .fine b{color:#aab3d7}
 
     <div class="hash">
       <div class="h">SHA256 · 应完全一致 · 96,291,705 B</div>
-      <div class="v">2cb81229ce8880f5446f72c1841d599da9baf3a6f4202556227e60e23c29d377</div>
+      <div class="v">5a73129d829d456f75aae60c05ce59f6043b38547f40d5aa69c2a0b324869f25</div>
     </div>
 
     <div class="safe">
       <div class="big">安全可还原 · th155.pak 保持原版不动</div>
-      <div class="txt">所有改动都是 <b>pak 内等长原地替换</b>，不重打包、不改 exe。把备份改回原名覆盖即可完全恢复原版。</div>
+      <div class="txt"><b>th155b.pak</b> 内的改动都是 <b>等长原地替换</b>，不重打包、不改 exe；<b>Netcode.dll</b> 也做过改动（帧数条与录像跳转需要）。把备份覆盖回去即可完全恢复原版。</div>
     </div>
     </div>
   </div>
