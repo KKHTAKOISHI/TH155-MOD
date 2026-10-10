@@ -14,7 +14,7 @@
 | [`netcode.ini`](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/netcode.ini) | 1.7 KB | 155r 网络模组设置（帧数条位置 / 淡出时长）|
 | [`Netcode.dll`](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/Netcode.dll) | 657 KB | 155r 网络模组（帧数条 / 逐帧 / 输入显示）|
 | [`th155r.exe`](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/th155r.exe) | 110 KB | 配套启动器（**必须用它启动**）|
-| [`README.md`](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/README.md) | 3.4 KB | 安装说明（含校验值）|
+| [`README.md`](https://github.com/KKHTAKOISHI/TH155-MOD/releases/download/pak-files/README.md) | 4.2 KB | 安装说明（含校验值）|
 
 ### 要下载哪些？
 
@@ -30,9 +30,9 @@
 
 | 文件 | 大小 (B) | SHA256 |
 |---|---|---|
-| `th155b.pak` | 96291705 | `62d06959e0bb5d0efc12b95f580473b37c81b74e840462de5f60b63764b67d1e` |
-| `netcode.ini` | 1699 | `de7fd99504e1acc096fe1418e42fbddea79d1c0374bd9515f1f11a7db3d83758` |
-| `Netcode.dll` | 656896 | `4d07174606c4a6a1a38118b898c66a6799a8378a4513e7ad4dbc7bab7d4d8c07` |
+| `th155b.pak` | 96291705 | `5a73129d829d456f75aae60c05ce59f6043b38547f40d5aa69c2a0b324869f25` |
+| `netcode.ini` | 1700 | `6cb55d1663468c04bcec26f3086644741610ae2c8e5044e17d61eec5781cb0c3` |
+| `Netcode.dll` | 656896 | `592b27b5178ee9387521c02c21ba1d7f1825409dbf8d0d1060fcf2494c25a0a2` |
 | `th155r.exe` | 110080 | `a711c4b3f9b1128386f8176491af7128d4d5ec6374e08b1715529d71385bab96` |
 
 > 校验值对应**本次发布**的这一版；pak 一旦更新，本页与 Release 附件会同步刷新。
@@ -60,7 +60,8 @@ certutil -hashfile th155b.pak SHA256
 - **快退需要重算**：战斗状态无法回滚，只能**从第 0 帧重新模拟到目标帧**，所以**目标越靠后越慢**
 - 跳转过程中即使碰到录像结尾也**不会中断播放**（有专门守卫，避免跳转途中把场景拆掉）
 
-> 代码位置：触发在 `battle_team.nut`（每帧读方向输入），执行在 `battle_on_hit.nut`，结尾守卫在 `battle_replay.nut` —— 都在 `th155b.pak` 内。
+> 代码位置：触发在 **`Netcode.dll` 内嵌的 `battle_team.nut`**（每帧读方向输入，因为新版 DLL 会覆盖 pak 里的同名文件），执行与结尾守卫在 `th155b.pak` 的 `battle_on_hit.nut` / `battle_replay.nut` 内。
+> 跳转期间会逐帧清理特效（`::effect.Clear()`），避免快进快退后画面残留大量命中特效。
 
 ## 练习模式帧数条
 
@@ -84,7 +85,9 @@ certutil -hashfile th155b.pak SHA256
 
 ## 说明
 
-- 所有改动均为 **pak 内等长原地替换**：不重打包、不改 exe，用原版 `.bak` 覆盖即可完整还原。
+- `th155b.pak` 的改动均为 **pak 内等长原地替换**：不重打包、不改 exe。
+- **`Netcode.dll` 也做过改动**（把录像跳转的触发代码加进它内嵌的 `battle_team.nut`，因为新版 DLL 会覆盖 pak 里的同名文件）；用原版备份覆盖即可完整还原。
+- 联机时**双方必须使用同一套 `th155b.pak` + `Netcode.dll`**。
 - 帧数条依赖 155r 网络模组（`Netcode.dll` / `th155r.exe`），请使用本 Release 提供的版本以保证接口一致。
 - 打防成功的第一帧会有一小段停顿，这是游戏本身的**命中冻结（hitstop）**，属原作手感，非本模组引入。
 - 游戏本体资源版权归 Twilight Frontier 所有，请自行持有正版游戏；本仓库仅提供修改后的归档文件。
