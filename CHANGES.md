@@ -6,6 +6,8 @@
 > **`Netcode.dll` 也做过改动**，联机时双方需使用同一份 DLL。
 > 下载与校验见 [README.md](README.md)。
 
+- **兼容性**：只替换 `th155b.pak` 也能正常运行（不会报错、不会闪退）；但**帧数条与录像快进快退需要配套的新版 Netcode.dll**，只换 pak 时这两项不生效。
+
 ## 练习模式：帧数条增强
 
 > 依赖 **155r 网络模组**（`Netcode.dll` / `th155r.exe` / `netcode.ini`），需用 `th155r.exe` 启动。
