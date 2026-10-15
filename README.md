@@ -32,9 +32,9 @@
 
 | 文件 | 大小 (B) | SHA256 |
 |---|---|---|
-| `th155b.pak` | 96291705 | `f811392a6c5d55d88a39b8390d9bccc94cad6450c2b7a1d05301c1f5d2c444ba` |
+| `th155b.pak` | 96291705 | `c472ee70381db2dc4bd006502fdce3c006f951ba0ed7052f54d8ba1073cb0b24` |
 | `netcode.ini` | 1700 | `6cb55d1663468c04bcec26f3086644741610ae2c8e5044e17d61eec5781cb0c3` |
-| `Netcode.dll` | 656896 | `592b27b5178ee9387521c02c21ba1d7f1825409dbf8d0d1060fcf2494c25a0a2` |
+| `Netcode.dll` | 656896 | `56f8177704d9d42fabf2b89a99d6eefc3671cedc886e223fc410871cf20cc09f` |
 | `th155r.exe` | 110080 | `a711c4b3f9b1128386f8176491af7128d4d5ec6374e08b1715529d71385bab96` |
 
 > 校验值对应**本次发布**的这一版；pak 一旦更新，本页与 Release 附件会同步刷新。
